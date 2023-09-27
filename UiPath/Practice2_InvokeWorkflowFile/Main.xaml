@@ -80,11 +80,7 @@
       <Variable x:TypeArguments="x:Int32" Name="DepositPeriod" />
       <Variable x:TypeArguments="x:Int32" Name="DepositAmount" />
       <Variable x:TypeArguments="x:Int32" Name="FinalEarnings" />
-      <Variable x:TypeArguments="x:String" Name="CalculationInfo">
-        <Variable.Default>
-          <Literal x:TypeArguments="x:String">Calculation Started!</Literal>
-        </Variable.Default>
-      </Variable>
+      <Variable x:TypeArguments="x:String" Default="Calculation Started!" Name="CalculationInfo" />
       <Variable x:TypeArguments="x:Double" Name="InterestValue" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
@@ -92,7 +88,7 @@
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:InputDialog Options="{x:Null}" OptionsString="{x:Null}" DisplayName="Input Dialog" sap:VirtualizedContainerService.HintSize="388,239" sap2010:WorkflowViewState.IdRef="InputDialog_2" IsPassword="False" Label="Please enter the initial deposit amount (in $)" Title="initial deposit amount">
+    <ui:InputDialog Options="{x:Null}" OptionsString="{x:Null}" DisplayName="Input Dialog" sap:VirtualizedContainerService.HintSize="388,239" sap2010:WorkflowViewState.IdRef="InputDialog_2" IsPassword="False" Label="Please enter the initial deposit amount (in $)" Title="initial deposit amount information">
       <ui:InputDialog.Result>
         <OutArgument x:TypeArguments="x:Int32">[DepositAmount]</OutArgument>
       </ui:InputDialog.Result>
@@ -105,21 +101,11 @@
     <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="388,141" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="[UiPath.Core.Activities.LogLevel.Info]" Message="[CalculationInfo]" />
     <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="InterestCalc.xaml - Invoke Workflow File" sap:VirtualizedContainerService.HintSize="388,113" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="InterestCalc.xaml">
       <ui:InvokeWorkflowFile.Arguments>
-        <InArgument x:TypeArguments="x:Double" x:Key="DepositAmount">
-          <VisualBasicValue x:TypeArguments="x:Double" ExpressionText="DepositAmount" />
-        </InArgument>
-        <InArgument x:TypeArguments="x:Double" x:Key="DepositPeriod">
-          <VisualBasicValue x:TypeArguments="x:Double" ExpressionText="DepositPeriod" />
-        </InArgument>
-        <InArgument x:TypeArguments="x:Double" x:Key="RatePerYear">
-          <Literal x:TypeArguments="x:Double" Value="1.75" />
-        </InArgument>
-        <InOutArgument x:TypeArguments="x:String" x:Key="Calculation_Info">
-          <VisualBasicReference x:TypeArguments="x:String" ExpressionText="CalculationInfo" />
-        </InOutArgument>
-        <OutArgument x:TypeArguments="x:Double" x:Key="InterestValue">
-          <VisualBasicReference x:TypeArguments="x:Double" ExpressionText="InterestValue" />
-        </OutArgument>
+        <InArgument x:TypeArguments="x:Double" x:Key="DepositAmount">[DepositAmount]</InArgument>
+        <InArgument x:TypeArguments="x:Double" x:Key="DepositPeriod">[DepositPeriod]</InArgument>
+        <InArgument x:TypeArguments="x:Double" x:Key="RatePerYear">1.75</InArgument>
+        <InOutArgument x:TypeArguments="x:String" x:Key="Calculation_Info">[CalculationInfo]</InOutArgument>
+        <OutArgument x:TypeArguments="x:Double" x:Key="InterestValue">[InterestValue]</OutArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
     <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" DisplayName="Message Box" sap:VirtualizedContainerService.HintSize="388,85" sap2010:WorkflowViewState.IdRef="MessageBox_1" Text="[CalculationInfo]" />
